@@ -3,3 +3,7 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
+
+// During tests phaser will attempt to interact with a canvas
+// This prevents errors related to that
+import 'jest-canvas-mock';
