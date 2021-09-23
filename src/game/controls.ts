@@ -14,6 +14,11 @@ export enum MovementControls {
   RIGHT = Input.Keyboard.KeyCodes.D
 }
 
+type Position = {
+  x: number;
+  y: number
+}
+
 /**
  * Cache and capture game controls
  * @param scene The current scene
@@ -44,29 +49,36 @@ const setCapturedKeys = (scene: Scene): void => {
 };
 
 // @TODO: Return an updated position instead of applying changes to the sprite directly
-export const updatePlayerPosition = (controls: Controls, sprite: GameObjects.Sprite, speed: number): void => {
+export const getUpdatedSpritePosition = (controls: Controls, sprite: GameObjects.Sprite, speed: number): Position => {
   const currentKey = getCurrentMovementKey(controls);
+
+  const updatedPosition: Position = {
+    x: sprite.x,
+    y: sprite.y
+  };
 
   switch (currentKey) {
     case MovementControls.UP:
-      sprite.y -= speed;
+      updatedPosition.y -= speed;
       break;
 
     case MovementControls.DOWN:
-      sprite.y += speed;
+      updatedPosition.y += speed;
       break;
 
     case MovementControls.LEFT:
-      sprite.x -= speed;
+      updatedPosition.x -= speed;
       break;
 
     case MovementControls.RIGHT:
-      sprite.x += speed;
+      updatedPosition.x += speed;
       break;
 
     default:
     //do nothing
   }
+
+  return updatedPosition;
 }
 
 const getCurrentMovementKey = (controls: Controls): number | undefined => {

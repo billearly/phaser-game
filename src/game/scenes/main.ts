@@ -1,5 +1,5 @@
 import { Scene, GameObjects, Cameras } from "phaser";
-import { initializeControls, updatePlayerPosition, Controls } from "../controls";
+import { initializeControls, getUpdatedSpritePosition, Controls } from "../controls";
 import { initializeCamera } from "../camera";
 
 export class MainScene extends Scene {
@@ -22,6 +22,9 @@ export class MainScene extends Scene {
   }
 
   update() {
-    updatePlayerPosition(this.controls, this.player, this.movementSpeed);
+    const updatedPosition = getUpdatedSpritePosition(this.controls, this.player, this.movementSpeed);
+
+    this.player.x = updatedPosition.x;
+    this.player.y = updatedPosition.y;
   }
 }
