@@ -5,7 +5,7 @@ export type Controls = {
   downKey: Input.Keyboard.Key;
   leftKey: Input.Keyboard.Key;
   rightKey: Input.Keyboard.Key;
-}
+};
 
 export enum MovementControls {
   UP = Input.Keyboard.KeyCodes.W,
@@ -16,8 +16,8 @@ export enum MovementControls {
 
 type Position = {
   x: number;
-  y: number
-}
+  y: number;
+};
 
 /**
  * Cache and capture game controls
@@ -30,9 +30,9 @@ export const initializeControls = (scene: Scene): Controls => {
     upKey: scene.input.keyboard.addKey(MovementControls.UP),
     downKey: scene.input.keyboard.addKey(MovementControls.DOWN),
     leftKey: scene.input.keyboard.addKey(MovementControls.LEFT),
-    rightKey: scene.input.keyboard.addKey(MovementControls.RIGHT),
-  }
-}
+    rightKey: scene.input.keyboard.addKey(MovementControls.RIGHT)
+  };
+};
 
 /**
  * Calls preventDefault on game controls to so that default browser
@@ -56,7 +56,11 @@ const setCapturedKeys = (scene: Scene): void => {
  * @param speed How much should be added/subtracted to the x or y coordinate
  * @returns `Position` object with new x and y coordinates
  */
-export const getUpdatedSpritePosition = (controls: Controls, sprite: GameObjects.Sprite, speed: number): Position => {
+export const getUpdatedSpritePosition = (
+  controls: Controls,
+  sprite: GameObjects.Sprite,
+  speed: number
+): Position => {
   const currentKey = getCurrentMovementKey(controls);
 
   const updatedPosition: Position = {
@@ -86,9 +90,13 @@ export const getUpdatedSpritePosition = (controls: Controls, sprite: GameObjects
   }
 
   return updatedPosition;
-}
+};
 
-export const updateSpritePositionWithVelocity = (controls: Controls, sprite: Physics.Arcade.Sprite, speed: number): void => {
+export const updateSpritePositionWithVelocity = (
+  controls: Controls,
+  sprite: Physics.Arcade.Sprite,
+  speed: number
+): void => {
   const currentKey = getCurrentMovementKey(controls);
 
   sprite.setVelocity(0);
@@ -113,18 +121,38 @@ export const updateSpritePositionWithVelocity = (controls: Controls, sprite: Phy
     default:
     //do nothing
   }
-}
+};
 
 const getCurrentMovementKey = (controls: Controls): number | undefined => {
-  if (controls.upKey.isDown && controls.downKey.isUp && controls.leftKey.isUp && controls.rightKey.isUp) {
+  if (
+    controls.upKey.isDown &&
+    controls.downKey.isUp &&
+    controls.leftKey.isUp &&
+    controls.rightKey.isUp
+  ) {
     return MovementControls.UP;
-  } else if (controls.upKey.isUp && controls.downKey.isDown && controls.leftKey.isUp && controls.rightKey.isUp) {
+  } else if (
+    controls.upKey.isUp &&
+    controls.downKey.isDown &&
+    controls.leftKey.isUp &&
+    controls.rightKey.isUp
+  ) {
     return MovementControls.DOWN;
-  } else if (controls.upKey.isUp && controls.downKey.isUp && controls.leftKey.isDown && controls.rightKey.isUp) {
+  } else if (
+    controls.upKey.isUp &&
+    controls.downKey.isUp &&
+    controls.leftKey.isDown &&
+    controls.rightKey.isUp
+  ) {
     return MovementControls.LEFT;
-  } else if (controls.upKey.isUp && controls.downKey.isUp && controls.leftKey.isUp && controls.rightKey.isDown) {
+  } else if (
+    controls.upKey.isUp &&
+    controls.downKey.isUp &&
+    controls.leftKey.isUp &&
+    controls.rightKey.isDown
+  ) {
     return MovementControls.RIGHT;
   } else {
     return;
   }
-}
+};

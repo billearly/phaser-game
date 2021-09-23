@@ -15,8 +15,8 @@ export const useGame = (
     }
     return () => {
       game?.destroy(true);
-    }
+    };
   }, [config, containerRef, game]);
 
   return game;
-}
+};

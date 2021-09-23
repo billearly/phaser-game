@@ -1,6 +1,10 @@
-import { Scene, Cameras, Physics } from "phaser";
-import { initializeControls, Controls, updateSpritePositionWithVelocity } from "../controls";
-import { initializeCamera } from "../camera";
+import { Scene, Cameras, Physics } from 'phaser';
+import {
+  initializeControls,
+  Controls,
+  updateSpritePositionWithVelocity
+} from '../controls';
+import { initializeCamera } from '../camera';
 
 export class MainScene extends Scene {
   private camera!: Cameras.Scene2D.Camera;
@@ -14,7 +18,10 @@ export class MainScene extends Scene {
   }
 
   preload() {
-    this.load.image('red-square', `${process.env.PUBLIC_URL}/sprites/red-square.png`);
+    this.load.image(
+      'red-square',
+      `${process.env.PUBLIC_URL}/sprites/red-square.png`
+    );
   }
 
   create() {
@@ -23,6 +30,10 @@ export class MainScene extends Scene {
   }
 
   update() {
-    updateSpritePositionWithVelocity(this.controls, this.player, this.movementSpeed);
+    updateSpritePositionWithVelocity(
+      this.controls,
+      this.player,
+      this.movementSpeed
+    );
   }
 }
