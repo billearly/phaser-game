@@ -1,4 +1,4 @@
-import { Scene, Input, GameObjects } from 'phaser';
+import { Scene, Input, GameObjects, Physics } from 'phaser';
 
 export type Controls = {
   upKey: Input.Keyboard.Key;
@@ -48,7 +48,14 @@ const setCapturedKeys = (scene: Scene): void => {
   ]);
 };
 
-// @TODO: Return an updated position instead of applying changes to the sprite directly
+/**
+ * @deprecated Use `updatePositionWithVelocity` instead
+ * which handles physics/collisions
+ * @param controls Current keys mapped to movement controls
+ * @param sprite The sprite to calculate the new position of
+ * @param speed How much should be added/subtracted to the x or y coordinate
+ * @returns `Position` object with new x and y coordinates
+ */
 export const getUpdatedSpritePosition = (controls: Controls, sprite: GameObjects.Sprite, speed: number): Position => {
   const currentKey = getCurrentMovementKey(controls);
 
@@ -79,6 +86,33 @@ export const getUpdatedSpritePosition = (controls: Controls, sprite: GameObjects
   }
 
   return updatedPosition;
+}
+
+export const updateSpritePositionWithVelocity = (controls: Controls, sprite: Physics.Arcade.Sprite, speed: number): void => {
+  const currentKey = getCurrentMovementKey(controls);
+
+  sprite.setVelocity(0);
+
+  switch (currentKey) {
+    case MovementControls.UP:
+      sprite.setVelocityY(speed * -1);
+      break;
+
+    case MovementControls.DOWN:
+      sprite.setVelocityY(speed);
+      break;
+
+    case MovementControls.LEFT:
+      sprite.setVelocityX(speed * -1);
+      break;
+
+    case MovementControls.RIGHT:
+      sprite.setVelocityX(speed);
+      break;
+
+    default:
+    //do nothing
+  }
 }
 
 const getCurrentMovementKey = (controls: Controls): number | undefined => {

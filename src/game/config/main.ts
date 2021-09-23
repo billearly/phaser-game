@@ -10,6 +10,9 @@ export const main: Types.Core.GameConfig = {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH
   },
+  physics: {
+    default: 'arcade'
+  },
   render: {
     antialias: false,
     pixelArt: true,

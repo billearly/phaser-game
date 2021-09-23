@@ -1,6 +1,6 @@
-import { Scene, GameObjects, Input } from 'phaser';
+import { Scene, GameObjects, Input, Physics } from 'phaser';
 import { mocked } from 'ts-jest/utils';
-import { Controls, getUpdatedSpritePosition, initializeControls, MovementControls } from '../controls';
+import { Controls, getUpdatedSpritePosition, initializeControls, MovementControls, updateSpritePositionWithVelocity } from '../controls';
 
 describe('controls', () => {
   describe("initializeControls", () => {
@@ -123,6 +123,108 @@ describe('controls', () => {
 
       expect(updatedPosition.y).toBe(0);
       expect(updatedPosition.x).toBe(10);
+    });
+  });
+
+  describe('updateSpritePositionWithVelocity', () => {
+    test('should call setVelocityY with a negative speed when the upKey is pressed', () => {
+      const controls = mocked<Controls>({
+        upKey: mocked<Input.Keyboard.Key>({ isUp: false, isDown: true } as unknown as Input.Keyboard.Key),
+        downKey: mocked<Input.Keyboard.Key>({ isUp: true, isDown: false } as unknown as Input.Keyboard.Key),
+        leftKey: mocked<Input.Keyboard.Key>({ isUp: true, isDown: false } as unknown as Input.Keyboard.Key),
+        rightKey: mocked<Input.Keyboard.Key>({ isUp: true, isDown: false } as unknown as Input.Keyboard.Key),
+      });
+
+      const sprite = mocked<Physics.Arcade.Sprite>({
+        setVelocity: jest.fn(),
+        setVelocityX: jest.fn(),
+        setVelocityY: jest.fn()
+      } as unknown as Physics.Arcade.Sprite);
+
+      updateSpritePositionWithVelocity(controls, sprite, 400);
+
+      expect(sprite.setVelocity).toBeCalledTimes(1);
+      expect(sprite.setVelocity).toBeCalledWith(0);
+
+      expect(sprite.setVelocityY).toBeCalledTimes(1);
+      expect(sprite.setVelocityY).toBeCalledWith(-400);
+
+      expect(sprite.setVelocityX).not.toBeCalled();
+    });
+
+    test('should call setVelocityY with a positive speed when the downKey is pressed', () => {
+      const controls = mocked<Controls>({
+        upKey: mocked<Input.Keyboard.Key>({ isUp: true, isDown: false } as unknown as Input.Keyboard.Key),
+        downKey: mocked<Input.Keyboard.Key>({ isUp: false, isDown: true } as unknown as Input.Keyboard.Key),
+        leftKey: mocked<Input.Keyboard.Key>({ isUp: true, isDown: false } as unknown as Input.Keyboard.Key),
+        rightKey: mocked<Input.Keyboard.Key>({ isUp: true, isDown: false } as unknown as Input.Keyboard.Key),
+      });
+
+      const sprite = mocked<Physics.Arcade.Sprite>({
+        setVelocity: jest.fn(),
+        setVelocityX: jest.fn(),
+        setVelocityY: jest.fn()
+      } as unknown as Physics.Arcade.Sprite);
+
+      updateSpritePositionWithVelocity(controls, sprite, 400);
+
+      expect(sprite.setVelocity).toBeCalledTimes(1);
+      expect(sprite.setVelocity).toBeCalledWith(0);
+
+      expect(sprite.setVelocityY).toBeCalledTimes(1);
+      expect(sprite.setVelocityY).toBeCalledWith(400);
+
+      expect(sprite.setVelocityX).not.toBeCalled();
+    });
+
+    test('should call setVelocityX with a negative speed when the leftKey is pressed', () => {
+      const controls = mocked<Controls>({
+        upKey: mocked<Input.Keyboard.Key>({ isUp: true, isDown: false } as unknown as Input.Keyboard.Key),
+        downKey: mocked<Input.Keyboard.Key>({ isUp: true, isDown: false } as unknown as Input.Keyboard.Key),
+        leftKey: mocked<Input.Keyboard.Key>({ isUp: false, isDown: true } as unknown as Input.Keyboard.Key),
+        rightKey: mocked<Input.Keyboard.Key>({ isUp: true, isDown: false } as unknown as Input.Keyboard.Key),
+      });
+
+      const sprite = mocked<Physics.Arcade.Sprite>({
+        setVelocity: jest.fn(),
+        setVelocityX: jest.fn(),
+        setVelocityY: jest.fn()
+      } as unknown as Physics.Arcade.Sprite);
+
+      updateSpritePositionWithVelocity(controls, sprite, 400);
+
+      expect(sprite.setVelocity).toBeCalledTimes(1);
+      expect(sprite.setVelocity).toBeCalledWith(0);
+
+      expect(sprite.setVelocityX).toBeCalledTimes(1);
+      expect(sprite.setVelocityX).toBeCalledWith(-400);
+
+      expect(sprite.setVelocityY).not.toBeCalled();
+    });
+
+    test('should call setVelocityX with a positive speed when the rightKey is pressed', () => {
+      const controls = mocked<Controls>({
+        upKey: mocked<Input.Keyboard.Key>({ isUp: true, isDown: false } as unknown as Input.Keyboard.Key),
+        downKey: mocked<Input.Keyboard.Key>({ isUp: true, isDown: false } as unknown as Input.Keyboard.Key),
+        leftKey: mocked<Input.Keyboard.Key>({ isUp: true, isDown: false } as unknown as Input.Keyboard.Key),
+        rightKey: mocked<Input.Keyboard.Key>({ isUp: false, isDown: true } as unknown as Input.Keyboard.Key),
+      });
+
+      const sprite = mocked<Physics.Arcade.Sprite>({
+        setVelocity: jest.fn(),
+        setVelocityX: jest.fn(),
+        setVelocityY: jest.fn()
+      } as unknown as Physics.Arcade.Sprite);
+
+      updateSpritePositionWithVelocity(controls, sprite, 400);
+
+      expect(sprite.setVelocity).toBeCalledTimes(1);
+      expect(sprite.setVelocity).toBeCalledWith(0);
+
+      expect(sprite.setVelocityX).toBeCalledTimes(1);
+      expect(sprite.setVelocityX).toBeCalledWith(400);
+
+      expect(sprite.setVelocityY).not.toBeCalled();
     });
   });
 });
