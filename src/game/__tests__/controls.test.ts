@@ -56,24 +56,13 @@ describe('controls', () => {
 
   describe('getUpdateSpritePosition', () => {
     test('should return a position with a lower Y value when the upKey is pressed', () => {
-      const controls = mocked<Controls>({
+      const controls: Controls = {
+        ...mockedNeutralControls,
         upKey: mocked<Input.Keyboard.Key>({
           isUp: false,
           isDown: true
-        } as unknown as Input.Keyboard.Key),
-        downKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
-        leftKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
-        rightKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
         } as unknown as Input.Keyboard.Key)
-      });
+      };
 
       const sprite = mocked<GameObjects.Sprite>({
         x: 0,
@@ -87,24 +76,13 @@ describe('controls', () => {
     });
 
     test('should return a position with a higher Y value when the downKey is pressed', () => {
-      const controls = mocked<Controls>({
-        upKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
+      const controls: Controls = {
+        ...mockedNeutralControls,
         downKey: mocked<Input.Keyboard.Key>({
           isUp: false,
           isDown: true
-        } as unknown as Input.Keyboard.Key),
-        leftKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
-        rightKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
         } as unknown as Input.Keyboard.Key)
-      });
+      };
 
       const sprite = mocked<GameObjects.Sprite>({
         x: 0,
@@ -118,24 +96,13 @@ describe('controls', () => {
     });
 
     test('should return a position with a lower X value when the leftKey is pressed', () => {
-      const controls = mocked<Controls>({
-        upKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
-        downKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
+      const controls: Controls = {
+        ...mockedNeutralControls,
         leftKey: mocked<Input.Keyboard.Key>({
           isUp: false,
           isDown: true
-        } as unknown as Input.Keyboard.Key),
-        rightKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
         } as unknown as Input.Keyboard.Key)
-      });
+      };
 
       const sprite = mocked<GameObjects.Sprite>({
         x: 0,
@@ -149,24 +116,13 @@ describe('controls', () => {
     });
 
     test('should return a position with a higher X value when the rightKey is pressed', () => {
-      const controls = mocked<Controls>({
-        upKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
-        downKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
-        leftKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
+      const controls: Controls = {
+        ...mockedNeutralControls,
         rightKey: mocked<Input.Keyboard.Key>({
           isUp: false,
           isDown: true
         } as unknown as Input.Keyboard.Key)
-      });
+      };
 
       const sprite = mocked<GameObjects.Sprite>({
         x: 0,
@@ -182,30 +138,15 @@ describe('controls', () => {
 
   describe('updateSpritePositionWithVelocity', () => {
     test('should call setVelocityY with a negative speed when the upKey is pressed', () => {
-      const controls = mocked<Controls>({
+      const controls: Controls = {
+        ...mockedNeutralControls,
         upKey: mocked<Input.Keyboard.Key>({
           isUp: false,
           isDown: true
-        } as unknown as Input.Keyboard.Key),
-        downKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
-        leftKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
-        rightKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
         } as unknown as Input.Keyboard.Key)
-      });
+      };
 
-      const sprite = mocked<Physics.Arcade.Sprite>({
-        setVelocity: jest.fn(),
-        setVelocityX: jest.fn(),
-        setVelocityY: jest.fn()
-      } as unknown as Physics.Arcade.Sprite);
+      const sprite = createMockedPhysicsSprite();
 
       updateSpritePositionWithVelocity(controls, sprite, 400);
 
@@ -219,30 +160,15 @@ describe('controls', () => {
     });
 
     test('should call setVelocityY with a positive speed when the downKey is pressed', () => {
-      const controls = mocked<Controls>({
-        upKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
+      const controls: Controls = {
+        ...mockedNeutralControls,
         downKey: mocked<Input.Keyboard.Key>({
           isUp: false,
           isDown: true
-        } as unknown as Input.Keyboard.Key),
-        leftKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
-        rightKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
         } as unknown as Input.Keyboard.Key)
-      });
+      };
 
-      const sprite = mocked<Physics.Arcade.Sprite>({
-        setVelocity: jest.fn(),
-        setVelocityX: jest.fn(),
-        setVelocityY: jest.fn()
-      } as unknown as Physics.Arcade.Sprite);
+      const sprite = createMockedPhysicsSprite();
 
       updateSpritePositionWithVelocity(controls, sprite, 400);
 
@@ -256,30 +182,15 @@ describe('controls', () => {
     });
 
     test('should call setVelocityX with a negative speed when the leftKey is pressed', () => {
-      const controls = mocked<Controls>({
-        upKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
-        downKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
+      const controls: Controls = {
+        ...mockedNeutralControls,
         leftKey: mocked<Input.Keyboard.Key>({
           isUp: false,
           isDown: true
-        } as unknown as Input.Keyboard.Key),
-        rightKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
         } as unknown as Input.Keyboard.Key)
-      });
+      };
 
-      const sprite = mocked<Physics.Arcade.Sprite>({
-        setVelocity: jest.fn(),
-        setVelocityX: jest.fn(),
-        setVelocityY: jest.fn()
-      } as unknown as Physics.Arcade.Sprite);
+      const sprite = createMockedPhysicsSprite();
 
       updateSpritePositionWithVelocity(controls, sprite, 400);
 
@@ -293,24 +204,13 @@ describe('controls', () => {
     });
 
     test('should call setVelocityX with a positive speed when the rightKey is pressed', () => {
-      const controls = mocked<Controls>({
-        upKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
-        downKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
-        leftKey: mocked<Input.Keyboard.Key>({
-          isUp: true,
-          isDown: false
-        } as unknown as Input.Keyboard.Key),
+      const controls: Controls = {
+        ...mockedNeutralControls,
         rightKey: mocked<Input.Keyboard.Key>({
           isUp: false,
           isDown: true
         } as unknown as Input.Keyboard.Key)
-      });
+      };
 
       const sprite = mocked<Physics.Arcade.Sprite>({
         setVelocity: jest.fn(),
@@ -330,3 +230,30 @@ describe('controls', () => {
     });
   });
 });
+
+const mockedNeutralControls: Controls = {
+  upKey: mocked<Input.Keyboard.Key>({
+    isUp: true,
+    isDown: false
+  } as unknown as Input.Keyboard.Key),
+  downKey: mocked<Input.Keyboard.Key>({
+    isUp: true,
+    isDown: false
+  } as unknown as Input.Keyboard.Key),
+  leftKey: mocked<Input.Keyboard.Key>({
+    isUp: true,
+    isDown: false
+  } as unknown as Input.Keyboard.Key),
+  rightKey: mocked<Input.Keyboard.Key>({
+    isUp: true,
+    isDown: false
+  } as unknown as Input.Keyboard.Key)
+};
+
+const createMockedPhysicsSprite = (): Physics.Arcade.Sprite => {
+  return mocked<Physics.Arcade.Sprite>({
+    setVelocity: jest.fn(),
+    setVelocityX: jest.fn(),
+    setVelocityY: jest.fn()
+  } as unknown as Physics.Arcade.Sprite);
+};
